@@ -1,7 +1,7 @@
 # Lab 4
 
 ## 1- Change the UX using a Bootswatch theme
-https://bootswtach.com
+[https://bootswtach.com](https://bootswatch.com/)
 
 ## 2- Choose one of the bootswatch themes and apply it to your app
 
