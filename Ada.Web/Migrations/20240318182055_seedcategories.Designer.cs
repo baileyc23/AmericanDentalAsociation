@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ada.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240318153319_AddedFooColumnToCategories")]
-    partial class AddedFooColumnToCategories
+    [Migration("20240318182055_seedcategories")]
+    partial class seedcategories
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,13 +39,47 @@ namespace Ada.Web.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("foo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DisplayOrder = 1,
+                            Name = "Azure"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DisplayOrder = 2,
+                            Name = "AWS"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DisplayOrder = 3,
+                            Name = "Sitefinity"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            DisplayOrder = 4,
+                            Name = "Generative AI"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            DisplayOrder = 5,
+                            Name = "Terraform"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            DisplayOrder = 6,
+                            Name = "Databricks"
+                        });
                 });
 #pragma warning restore 612, 618
         }

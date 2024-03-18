@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ada.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240318152842_AddCategoryTableToDB")]
-    partial class AddCategoryTableToDB
+    [Migration("20240318174940_AddFoo")]
+    partial class AddFoo
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,6 +34,10 @@ namespace Ada.Web.Migrations
 
                     b.Property<int>("DisplayOrder")
                         .HasColumnType("int");
+
+                    b.Property<string>("Foo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()

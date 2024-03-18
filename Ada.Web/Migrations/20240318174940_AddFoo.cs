@@ -5,13 +5,13 @@
 namespace Ada.Web.Migrations
 {
     /// <inheritdoc />
-    public partial class AddedFooColumnToCategories : Migration
+    public partial class AddFoo : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "foo",
+                name: "Foo",
                 table: "Categories",
                 type: "nvarchar(max)",
                 nullable: false,
@@ -22,7 +22,7 @@ namespace Ada.Web.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "foo",
+                name: "Foo",
                 table: "Categories");
         }
     }

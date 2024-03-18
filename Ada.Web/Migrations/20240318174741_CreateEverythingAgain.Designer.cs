@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ada.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240318155614_removedfoo")]
-    partial class removedfoo
+    [Migration("20240318174741_CreateEverythingAgain")]
+    partial class CreateEverythingAgain
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

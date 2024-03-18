@@ -5,7 +5,7 @@
 namespace Ada.Web.Migrations
 {
     /// <inheritdoc />
-    public partial class AddCategoryTableToDB : Migration
+    public partial class CreateEverythingAgain : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

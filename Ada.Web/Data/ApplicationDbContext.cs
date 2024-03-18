@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Ada.Web.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ada.Web.Data
 {
@@ -9,5 +10,17 @@ namespace Ada.Web.Data
         }
 
         public DbSet<Models.Category> Categories { get; set; }
+
+        override protected void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Category>().HasData(
+                new Category { Id = 1, Name = "Azure", DisplayOrder = 1 },
+                new Category { Id = 2, Name = "AWS", DisplayOrder = 2 },
+                new Category { Id = 3, Name = "Sitefinity", DisplayOrder = 3 },
+                new Category { Id = 4, Name = "Generative AI", DisplayOrder = 4 },
+                new Category { Id = 5, Name = "Terraform", DisplayOrder = 5 },
+                new Category { Id = 6, Name = "Databricks", DisplayOrder = 6 }
+                );
+        }
     }
 }
