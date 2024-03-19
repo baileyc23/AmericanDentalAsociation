@@ -46,5 +46,70 @@ namespace Ada.Web.Controllers
             return View();
             
         }
+
+        public IActionResult Edit(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            Category? categoryFromDB = _db.Categories.Find(id);
+            //Category? categoryFromDB = _db.Categories.FirstOrDefault(u => u.Id == id);
+            //Category? categoryFromDB = _db.Categories.Where(u => u.Id == id).FirstOrDefault();
+
+            if (categoryFromDB == null)
+            {
+                return NotFound();
+            }
+
+            return View(categoryFromDB);
+
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Category obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Categories.Update(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            //Category? categoryFromDB = _db.Categories.Find(id);
+
+            // Other options to find the category
+            Category? categoryFromDB = _db.Categories.FirstOrDefault(u => u.Id == id);
+            //Category categoryFromDB = _db.Categories.Where(u => u.Id == id).FirstOrDefault();
+
+            if (categoryFromDB == null)
+            {
+                return NotFound();
+            }
+            return View(categoryFromDB);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeletePost(int? id)
+        {
+            Category? obj = _db.Categories.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            _db.Categories.Remove(obj);
+            _db.SaveChanges(); 
+            return RedirectToAction("Index");
+
+        }
     }
 }
