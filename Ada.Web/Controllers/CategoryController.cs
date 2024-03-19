@@ -27,9 +27,24 @@ namespace Ada.Web.Controllers
         [HttpPost]
         public IActionResult Create(Category obj)
         {
-            _db.Categories.Add(obj);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
+            if (obj.Name == obj.DisplayOrder.ToString())
+            {
+                ModelState.AddModelError("", "The Name and Display Order fields cannot be the same");
+            }
+
+            if (obj.Name.ToLower() == "test")
+            {
+                ModelState.AddModelError("", "The name can't be test");
+            }
+
+            if (ModelState.IsValid)
+            {
+                _db.Categories.Add(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View();
+            
         }
     }
 }
