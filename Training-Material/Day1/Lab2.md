@@ -78,7 +78,7 @@ update-database
 ### Head back to the Package Manager Console and add a migration for the new Category table
 
 ```
-add-migrations AddCategoryTabletoDB
+add-migration AddCategoryTabletoDB
 ```
 > [!IMPORTANT]
 The migration file will be created in the Data/Migrations folder, take a look and see the code generated for the new table.
