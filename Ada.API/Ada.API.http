@@ -1,0 +1,21 @@
+@Ada.API_HostAddress = http://localhost:5210
+
+GET {{Ada.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+GET {{Ada.API_HostAddress}}/api/mohsin
+
+###
+
+POST {{Ada.API_HostAddress}}/api/mohsin
+Content-Type: application/json
+
+{
+  "id":3,
+  "name":"Mohsin",
+  "displayorder": 3
+}
+
+###
