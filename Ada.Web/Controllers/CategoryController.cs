@@ -1,5 +1,5 @@
-﻿using Ada.Web.Data;
-using Ada.Web.Models;
+﻿using Ada.DataAccess.Data;
+using Ada.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ada.Web.Controllers

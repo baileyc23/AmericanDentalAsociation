@@ -1,7 +1,7 @@
-﻿using Ada.Web.Models;
+﻿using Ada.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Ada.Web.Data
+namespace Ada.DataAccess.Data
 {
     public class ApplicationDbContext: DbContext
     {

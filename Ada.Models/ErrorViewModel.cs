@@ -1,4 +1,4 @@
-namespace Ada.Web.Models
+namespace Ada.Models
 {
     public class ErrorViewModel
     {

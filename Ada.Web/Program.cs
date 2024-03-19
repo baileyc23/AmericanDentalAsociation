@@ -1,4 +1,4 @@
-using Ada.Web.Data;
+using Ada.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

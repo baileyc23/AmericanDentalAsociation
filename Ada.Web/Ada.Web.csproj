@@ -15,4 +15,10 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Ada.DataAccess\Ada.DataAccess.csproj" />
+    <ProjectReference Include="..\Ada.Models\Ada.Models.csproj" />
+    <ProjectReference Include="..\Ada.Utility\Ada.Utility.csproj" />
+  </ItemGroup>
+
 </Project>

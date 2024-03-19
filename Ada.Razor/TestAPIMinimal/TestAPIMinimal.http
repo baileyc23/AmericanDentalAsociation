@@ -1,0 +1,30 @@
+﻿@TestAPIMinimal_HostAddress = http://localhost:5018
+
+POST {{TestAPIMinimal_HostAddress}}/categoryitems
+Content-Type: application/json
+
+{
+  "name":"Databricks Training Class",
+  "displayorder":5
+}
+
+###
+
+GET {{TestAPIMinimal_HostAddress}}/categoryitems
+
+###
+
+GET {{TestAPIMinimal_HostAddress}}/categoryitems/1
+
+###
+
+PUT {{TestAPIMinimal_HostAddress}}/categoryitems/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Change in Name",
+  "displayorder": 6
+}
+
+###
