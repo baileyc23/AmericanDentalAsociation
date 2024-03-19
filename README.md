@@ -39,8 +39,7 @@
 | 1:00 - 2:00 | Lab 7 Editing and Deleting of Categories|
 | 2:00 - 2:15 | Break |
 | 2:15 - 3:00 | Razor Project - WebAPI and Minimal API|
-| 3:00 - 3:30 | Lab 8 Creating a Razor Project and time to experiment with API|
-| 3:30 - 3:45 | Break |
+| 3:00 - 3:45 | Lab 8 Creating a Razor Project and time to experiment with API|
 | 3:45 - 4:30 | Splitting the Application into multiple projects |
 | 4:30 - 5:00 | Lab 9 Splitting the application into multiple projects|
 
