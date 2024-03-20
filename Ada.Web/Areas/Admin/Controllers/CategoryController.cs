@@ -3,8 +3,9 @@ using Ada.DataAccess.Repository;
 using Ada.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Ada.Web.Controllers
+namespace Ada.Web.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitofwork;
@@ -42,10 +43,11 @@ namespace Ada.Web.Controllers
             {
                 _unitofwork.CategoryRepository.Add(obj);
                 _unitofwork.Save();
+                TempData["success"] = "Category added successfully";
                 return RedirectToAction("Index");
             }
             return View();
-            
+
         }
 
         public IActionResult Edit(int? id)
@@ -55,7 +57,7 @@ namespace Ada.Web.Controllers
                 return NotFound();
             }
 
-            Category? categoryFromDB = _unitofwork.CategoryRepository.Get(u=>u.Id == id);
+            Category? categoryFromDB = _unitofwork.CategoryRepository.Get(u => u.Id == id);
             //Category? categoryFromDB = _db.Categories.FirstOrDefault(u => u.Id == id);
             //Category? categoryFromDB = _db.Categories.Where(u => u.Id == id).FirstOrDefault();
 
@@ -75,6 +77,7 @@ namespace Ada.Web.Controllers
             {
                 _unitofwork.CategoryRepository.Update(obj);
                 _unitofwork.Save();
+                TempData["success"] = "Category Updated successfully";
                 return RedirectToAction("Index");
             }
             return View(obj);
@@ -102,13 +105,14 @@ namespace Ada.Web.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePost(int? id)
         {
-            Category? obj = _unitofwork.CategoryRepository.Get(u=>u.Id == id);
+            Category? obj = _unitofwork.CategoryRepository.Get(u => u.Id == id);
             if (obj == null)
             {
                 return NotFound();
             }
             _unitofwork.CategoryRepository.Remove(obj);
-            _unitofwork.Save(); 
+            _unitofwork.Save();
+            TempData["success"] = "Category Deleted successfully";
             return RedirectToAction("Index");
 
         }

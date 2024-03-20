@@ -4,8 +4,9 @@ using Ada.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Ada.Web.Controllers
+namespace Ada.Web.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CourseController : Controller
     {
         private readonly IUnitOfWork _unitofwork;
@@ -33,7 +34,7 @@ namespace Ada.Web.Controllers
 
             return View(courseVM);
         }
-          
+
 
         [HttpPost]
         public IActionResult Create(CourseVM obj)
@@ -42,6 +43,7 @@ namespace Ada.Web.Controllers
             {
                 _unitofwork.CourseRepository.Add(obj.Course);
                 _unitofwork.Save();
+                TempData["Success"] = "Course Added Successfully";
                 return RedirectToAction("Index");
             }
             return View();
@@ -73,6 +75,7 @@ namespace Ada.Web.Controllers
             {
                 _unitofwork.CourseRepository.Update(obj.Course);
                 _unitofwork.Save();
+                TempData["Success"] = "Course Updated Successfully";
                 return RedirectToAction("Index");
             }
             return View(obj);
@@ -107,6 +110,7 @@ namespace Ada.Web.Controllers
             }
             _unitofwork.CourseRepository.Remove(obj);
             _unitofwork.Save();
+            TempData["Success"] = "Course Deleted Successfully";
             return RedirectToAction("Index");
         }
     }
