@@ -1,11 +1,14 @@
 ﻿using Ada.DataAccess.Data;
 using Ada.DataAccess.Repository;
 using Ada.Models;
+using Ada.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Ada.Web.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = StaticDetails.Role_Admin)]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitofwork;
