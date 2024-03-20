@@ -58,4 +58,4 @@
 | 3:00 - 3:30 | Lab 12 Areas, Tempdata, Partial Views and Toastr Notifications |
 | 3:30 - 3:45 | Break |
 | 3:45 - 4:30 | Authentication and Authorization |
-| 4:30 - 5:00 | Lab 13 Athwentication and Authorization|
+| 4:30 - 5:00 | Lab 13 Authentication and Authorization|
