@@ -16,6 +16,7 @@ public IActionResult Edit(Category obj)
     return View();
 }
 ```
+### Add this to the index.cshtml view to display the message
 
 ```html
 @if (TempData["success"] != null)
@@ -23,8 +24,7 @@ public IActionResult Edit(Category obj)
     <h2>@TempData["success"]</h2>
 }
 ```
-
-## 2- Create a partial view for the Temp Data called _Notification.cshtml_
+### Better yet, create a partial view for the Temp Data called _Notification.cshtml_ and insert the code there
 
 ```html
 @if (TempData["success"] != null)
@@ -66,7 +66,7 @@ Change the _Notification.cshtml to use toastr
     </script>
 }
 ```
-You ### can place the partial in the index.cshtml view or in the _Layout.cshtml (_layout is preferrable)_)
+### You can place the partial in the index.cshtml view or in the _Layout.cshtml (_layout is preferrable)_)
 ```html
 <div class="container">
     <main role="main" class="pb-3">
