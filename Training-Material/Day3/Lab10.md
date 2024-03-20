@@ -220,6 +220,147 @@ Learning how to use the IUnitOfWork pattern to abstract the data access layer to
 
 ### Instructions
 
+### 1- Add the IUnitOfWork interface
+```csharp
+public interface IUnitOfWork
+{
+    ICategoryRepository CategoryRepository { get; }
+    void Save();
+}
+```
 
+### 2- Add the UnitOfWork class
+```csharp
+public class UnitOfWork: IUnitOfWork
+{
+    private readonly ApplicationDBContext _db;
+    public ICategoryRepository CategoryRepository { get; private set; }
+
+    public UnitOfWork(ApplicationDBContext db)
+    {
+        _db = db;
+        CategoryRepository = new CategoryRepository(_db);
+    }
+    
+    public void Save()
+    {
+        _db.SaveChanges();
+    }
+}
+```
+
+### 3- Add the following code to the `program.cs` file to inject the scoped service 
+```csharp
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); 
+//Replace the AddScoped for the ICategoryRepository with the IUnitOfWork
+```
+
+### 4- Replace the ICategoryRepository in the CategoryController with the IUnitOfWork
+```csharp
+public class CategoryController : Controller
+{
+    private readonly IUnitOfWork _unitofwork;
+    public CategoryController(IUnitOfWork unitofwork)
+    {
+        _unitofwork = unitofwork;
+    }
+    public IActionResult Index()
+    {
+        List<Category> CategoryList = _unitofwork.CategoryRepository.GetAll().ToList();
+        return View(CategoryList);
+    }
+
+    public IActionResult Create()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult Create(Category obj)
+    {
+        if (obj.Name == obj.DisplayOrder.ToString())
+        {
+            ModelState.AddModelError("Name", "The Name and Display Order fields cannot be the same");
+        }
+        if (obj.Name.ToLower() == "test")
+        {
+            ModelState.AddModelError("", "The Name field cannot be 'test'");
+        }
+
+        if (ModelState.IsValid)
+        {
+            _unitofwork.CategoryRepository.Add(obj);
+            _unitofwork.Save();
+            return RedirectToAction("Index");
+        }
+        return View();
+    }
+
+    public IActionResult Edit(int? id)
+    {
+        if (id == null || id == 0)
+        {
+            return NotFound();
+        }
+        Category? categoryFromDB = _unitofwork.CategoryRepository.Get(u => u.Id == id);
+
+        // Other options to find the category
+        //Category categoryFromDB = _db.Categories.FirstOrDefault(u => u.Id == id);
+        //Category categoryFromDB = _db.Categories.Where(u => u.Id == id).FirstOrDefault();
+
+        if (categoryFromDB == null)
+        {
+            return NotFound();
+        }
+        return View(categoryFromDB);
+    }
+
+    [HttpPost]
+    public IActionResult Edit(Category obj)
+    {
+        if (ModelState.IsValid)
+        {
+            _unitofwork.CategoryRepository.Update(obj);
+            _unitofwork.Save();
+            return RedirectToAction("Index");
+        }
+        return View();
+    }
+
+    public IActionResult Delete(int? id)
+    {
+        if (id == null || id == 0)
+        {
+            return NotFound();
+        }
+        Category? categoryFromDB = _unitofwork.CategoryRepository.Get(u => u.Id == id);
+
+        // Other options to find the category
+        //Category categoryFromDB = _db.Categories.FirstOrDefault(u => u.Id == id);
+        //Category categoryFromDB = _db.Categories.Where(u => u.Id == id).FirstOrDefault();
+
+        if (categoryFromDB == null)
+        {
+            return NotFound();
+        }
+        return View(categoryFromDB);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    public IActionResult DeletePost(int? id)
+    {
+        Category? obj = _unitofwork.CategoryRepository.Get(u => u.Id == id);
+        if (obj == null)
+        {
+            return NotFound();
+        }
+        _unitofwork.CategoryRepository.Remove(obj);
+        _unitofwork.Save();
+        return RedirectToAction("Index");
+    }
+}
+```
+
+### 5- Run the application and navigate to the `/Category` route.
 
 
