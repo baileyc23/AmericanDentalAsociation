@@ -4,6 +4,7 @@ using Ada.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ada.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240320150153_AddCoursesToDatabase")]
+    partial class AddCoursesToDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,9 +92,6 @@ namespace Ada.Web.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -117,15 +117,12 @@ namespace Ada.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
                     b.ToTable("Courses");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            CategoryId = 1,
                             Description = "A 3 day Training Class on ASP.NET 8 Development using the latest version of Visual Studio",
                             Instructor = "Lino Tadros",
                             Online = true,
@@ -137,7 +134,6 @@ namespace Ada.Web.Migrations
                         new
                         {
                             Id = 2,
-                            CategoryId = 2,
                             Description = "A 3 day Training Class of Microsoft Fabric for Data Analytics",
                             Instructor = "Lino Tadros",
                             Online = true,
@@ -149,7 +145,6 @@ namespace Ada.Web.Migrations
                         new
                         {
                             Id = 3,
-                            CategoryId = 3,
                             Description = "A 2 day Training Class for Sitefinity development using MVC in ASP.NET",
                             Instructor = "Lino Tadros",
                             Online = true,
@@ -158,17 +153,6 @@ namespace Ada.Web.Migrations
                             PricePrivate = 12000.0,
                             Title = "Mastering Sitefinity Development"
                         });
-                });
-
-            modelBuilder.Entity("Ada.Models.Course", b =>
-                {
-                    b.HasOne("Ada.Models.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
                 });
 #pragma warning restore 612, 618
         }

@@ -11,11 +11,13 @@ namespace Ada.DataAccess.Repository
     {
         private readonly ApplicationDbContext _db;
         public ICategoryRepository CategoryRepository { get; private set; }
+        public ICourseRepository CourseRepository { get; private set; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
             CategoryRepository = new CategoryRepository(_db);
+            CourseRepository = new CourseRepository(_db);
         }
 
         public void Save()

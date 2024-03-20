@@ -9,6 +9,7 @@ namespace Ada.DataAccess.Repository
     public interface IUnitOfWork
     {
         ICategoryRepository CategoryRepository { get; }
+        ICourseRepository CourseRepository { get; }
         void Save();
     }
 }

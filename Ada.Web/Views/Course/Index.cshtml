@@ -1,0 +1,47 @@
+﻿@model List<Course>
+
+<div class="container">
+    <div class="row pt-4 pb-3">
+        <div class="col-6">
+            <h2 class="text-primary">Course List</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Course" asp-action="Create" class="btn btn-primary"> <i class="bi bi-plus-circle"></i>Create New Course</a>
+        </div>
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Course Name</th>
+                <th>Description</th>
+                <th>Instructor</th>
+                <th>Price</th>
+                <th>Price for 4 or more</th>
+                <th>Price for Private Class</th>
+                <th>Online</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var course in Model)
+            {
+
+                <tr>
+                    <td>@course.Title</td>
+                    <td>@course.Description</td>
+                    <td>@course.Instructor</td>
+                    <td>@course.Price</td>
+                    <td>@course.Price4</td>
+                    <td>@course.PricePrivate</td>
+                    <td>@course.Online</td>
+                    <td>
+                        <div class="w-75 btn-group" role="group">
+                            <a asp-controller="Course" asp-action="Edit" asp-route-id="@course.Id" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i>Edit</a>
+                            <a asp-controller="Course" asp-action="Delete" asp-route-id="@course.Id" class="btn btn-danger mx-2"><i class="bi bi-trash-fill"></i>Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
