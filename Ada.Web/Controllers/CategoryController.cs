@@ -1,4 +1,5 @@
 ﻿using Ada.DataAccess.Data;
+using Ada.DataAccess.Repository;
 using Ada.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,16 +7,16 @@ namespace Ada.Web.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        private readonly IUnitOfWork _unitofwork;
 
-        public CategoryController(ApplicationDbContext db)
+        public CategoryController(IUnitOfWork unitofwork)
         {
-            _db = db;
+            _unitofwork = unitofwork;
         }
 
         public IActionResult Index()
         {
-            List<Category> CategoryList = _db.Categories.ToList();
+            List<Category> CategoryList = _unitofwork.CategoryRepository.GetAll().ToList();
             return View(CategoryList);
         }
 
@@ -39,8 +40,8 @@ namespace Ada.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                _db.Categories.Add(obj);
-                _db.SaveChanges();
+                _unitofwork.CategoryRepository.Add(obj);
+                _unitofwork.Save();
                 return RedirectToAction("Index");
             }
             return View();
@@ -54,7 +55,7 @@ namespace Ada.Web.Controllers
                 return NotFound();
             }
 
-            Category? categoryFromDB = _db.Categories.Find(id);
+            Category? categoryFromDB = _unitofwork.CategoryRepository.Get(u=>u.Id == id);
             //Category? categoryFromDB = _db.Categories.FirstOrDefault(u => u.Id == id);
             //Category? categoryFromDB = _db.Categories.Where(u => u.Id == id).FirstOrDefault();
 
@@ -72,8 +73,8 @@ namespace Ada.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Categories.Update(obj);
-                _db.SaveChanges();
+                _unitofwork.CategoryRepository.Update(obj);
+                _unitofwork.Save();
                 return RedirectToAction("Index");
             }
             return View(obj);
@@ -88,7 +89,7 @@ namespace Ada.Web.Controllers
             //Category? categoryFromDB = _db.Categories.Find(id);
 
             // Other options to find the category
-            Category? categoryFromDB = _db.Categories.FirstOrDefault(u => u.Id == id);
+            Category? categoryFromDB = _unitofwork.CategoryRepository.Get(u => u.Id == id);
             //Category categoryFromDB = _db.Categories.Where(u => u.Id == id).FirstOrDefault();
 
             if (categoryFromDB == null)
@@ -101,13 +102,13 @@ namespace Ada.Web.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePost(int? id)
         {
-            Category? obj = _db.Categories.Find(id);
+            Category? obj = _unitofwork.CategoryRepository.Get(u=>u.Id == id);
             if (obj == null)
             {
                 return NotFound();
             }
-            _db.Categories.Remove(obj);
-            _db.SaveChanges(); 
+            _unitofwork.CategoryRepository.Remove(obj);
+            _unitofwork.Save(); 
             return RedirectToAction("Index");
 
         }
