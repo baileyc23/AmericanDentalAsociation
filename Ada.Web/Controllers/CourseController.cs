@@ -1,5 +1,6 @@
 ﻿using Ada.DataAccess.Repository;
 using Ada.Models;
+using Ada.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -20,30 +21,26 @@ namespace Ada.Web.Controllers
 
         public IActionResult Create()
         {
-            IEnumerable<SelectListItem> CategoryList = _unitofwork.CategoryRepository.GetAll().Select(i => new SelectListItem
+            CourseVM courseVM = new CourseVM()
             {
-                Text = i.Name,
-                Value = i.Id.ToString()
-            });
+                Course = new Course(),
+                CategoryList = _unitofwork.CategoryRepository.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                })
+            };
 
-            ViewBag.CategoryList = CategoryList;
-            return View();
+            return View(courseVM);
         }
+          
 
         [HttpPost]
-        public IActionResult Create(Course obj)
+        public IActionResult Create(CourseVM obj)
         {
-            if (obj != null && obj.Title == obj.Description.ToString())
-            {
-                ModelState.AddModelError("Title", "The Title and Description fields cannot be the same");
-            }
-            if (obj != null && obj.Title.ToLower() == "test")
-            {
-                ModelState.AddModelError("", "The Title field cannot be 'test'");
-            }
             if (ModelState.IsValid)
             {
-                _unitofwork.CourseRepository.Add(obj);
+                _unitofwork.CourseRepository.Add(obj.Course);
                 _unitofwork.Save();
                 return RedirectToAction("Index");
             }
@@ -70,11 +67,11 @@ namespace Ada.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(Course obj)
+        public IActionResult Edit(CourseVM obj)
         {
             if (ModelState.IsValid)
             {
-                _unitofwork.CourseRepository.Update(obj);
+                _unitofwork.CourseRepository.Update(obj.Course);
                 _unitofwork.Save();
                 return RedirectToAction("Index");
             }
